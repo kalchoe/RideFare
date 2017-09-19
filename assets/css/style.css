@@ -5,3 +5,19 @@
 .input-field {
 	background-color: white;
 }
+
+/* label focus color */
+    .input-field input[type=text]:focus + label, .materialize-textarea:focus:not([readonly]) + label {
+     color: #ee6e73 !important;
+    }
+
+/* label underline focus color */
+    .input-field input[type=text]:focus, .materialize-textarea:focus:not([readonly]) {
+     border-bottom: 1px solid #ee6e73 !important;
+     box-shadow: 0 1px 0 0 #ee6e73 !important;
+    }
+
+.materials-icon, .prefix {
+	margin-top: 15px;
+	color: #ee6e73;
+}
