@@ -1,3 +1,4 @@
+// Parallax feature to control scroll speed as your scroll down page
 $.fn.parallax = function () {
     var window_width = $(window).width();
     // Parallax Scripts
@@ -49,7 +50,7 @@ $.fn.parallax = function () {
       });
     });
   };
-
+// get parallax feature ready when page loads
   $(document).ready(function(){
-      $('.parallax-container').parallax();
+      $('.parallax').parallax();
     });
