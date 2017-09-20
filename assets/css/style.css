@@ -1,5 +1,5 @@
 .parallax-container {
-      height: 300px;
+      height: 400px;
     }
 
 .input-field {
@@ -20,4 +20,9 @@
 .materials-icon, .prefix {
 	margin-top: 15px;
 	color: #ee6e73;
+}
+
+#submit {
+    background-color: #ee6e73;
+    margin-top: 40px;
 }
