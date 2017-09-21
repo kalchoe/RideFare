@@ -30,11 +30,3 @@
 #map {
     height: 300px;
 }
-
-#uber {
-    float: left;
-}
-
-#lyft {
-    float: right;
-}
