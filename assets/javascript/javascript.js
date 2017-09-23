@@ -154,7 +154,11 @@
                     lyftDiv.append(price);
                     lyftDiv.append(distance);
 
+                    var surge = parseInt(lyft.primetime_percentage);
 
+                    if (surge > 0) {
+                    	lyftDiv.append('<i class="material-icons prefix">warning</i>' + " Surge Pricing");
+                    }
                 }
             });
 		});
