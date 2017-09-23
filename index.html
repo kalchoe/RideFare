@@ -220,6 +220,53 @@
 				}
 			});
 
+
+
+            $.ajax({
+                url: "https://api.lyft.com/v1/cost?start_lat=" + startLat + "&start_lng=" + startLong + "&end_lat=" + endLat + "&end_lng=" + endLong,
+                headers: {
+                    Authorization: "bearer " + "jpUVi1A41gLssi8agPiLKDXoNzGDXQ0LCIhl1ZBZlcz/pkpTEqLMe7abmxiTzIyFo9gVLkJ9JmCc/cDNF87f5tF0my2m7Qfy84lbV/IPOC+4FLIn6HuFMtk=" 
+                },
+                
+                success: function(result) {
+
+                    var lyft = result.cost_estimates[3];
+                    console.log(lyft);
+
+                    var maxPrice = lyft.estimated_cost_cents_max;
+                    var minPrice = lyft.estimated_cost_cents_min;
+                    
+
+                    var maxPriceDollars = (lyft.estimated_cost_cents_max / 100);
+                    var minPriceDollars = (lyft.estimated_cost_cents_min / 100);
+                    
+
+                    var timeSeconds = lyft.estimated_duration_seconds;
+                    var timeMinutes = Math.round(timeSeconds / 60);
+
+                    var estimatedDistanceMiles = lyft.estimated_distance_miles;
+
+                    console.log("The trip will take approximately " + timeMinutes + " minutes.");
+
+                    console.log("The total distance of the trip is " + estimatedDistanceMiles + " miles.")
+
+                    console.log("The estimated price will be $" + minPriceDollars + "-" + maxPriceDollars + ".");
+
+                    var time = $("<p>").text("The trip will take approximately " + timeMinutes + " minutes.");
+
+                    var price = $("<p>").text("The estimated price will be $" + minPriceDollars + "-" + maxPriceDollars + ".");
+
+                    var distance = $("<p>").text("The total distance of the trip is " + estimatedDistanceMiles + " miles.");
+
+                    var lyftDiv = $("#lyft-content");
+
+                    lyftDiv.html(time);
+                    lyftDiv.append(price);
+                    lyftDiv.append(distance);
+
+
+                }
+            });
 		});
 		
 	});
