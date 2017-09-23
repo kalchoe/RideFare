@@ -215,6 +215,25 @@
 				success: function(result) {
 					console.log(result);
 					
+
+					var uber = result.prices[1];
+					console.log(uber)
+
+					var uberCostEstimate = result.prices[1].estimate;
+					var uberTimeEstimate = result.prices[1].duration;
+					var uberDistanceEstimate = result.prices[1].distance;
+
+					var time = $("<p>").text("The trip will take approximately " + uberTimeEstimate + " minutes.");
+
+                    var price = $("<p>").text("The estimated price will be " + uberCostEstimate);
+
+                    var distance = $("<p>").text("The total distance of the trip is " + uberDistanceEstimate + " miles.");
+
+                    var uberDiv = $("#uber-content");
+
+                    uberDiv.html(time);
+                    uberDiv.append(price);
+                    uberDiv.append(distance);
 				}
 			});
 
