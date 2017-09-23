@@ -1,34 +1,76 @@
+var mapUse = false;
+var markerStartLat;
+var markerStartLong;
+var markerEndLat;
+var markerEndLong;
 
 		function initMap() {
+
+			
 			var myLatLng = {lat: 30.2672, lng: -97.7431};
 
-			console.log(myLatLng);
+			// console.log(myLatLng);
 
 			var map = new google.maps.Map(document.getElementById("map"), {
 				zoom: 14,
 				center: myLatLng
 			});
 
-			var marker1 = new google.maps.Marker({
-				position: myLatLng,
-				map: map,
-				title: 'Hello World!'
-			});
-			console.log(marker1);
-			// console.log(marker1.position.lat.Scopes[3].b);
-			map.addListener('click', function(e) {
-				placeMarker(e.latLng, map);
-			});
+			var numberOfMarkers = 0;
 
-			function placeMarker(position, map) {
-				var marker2 = new google.maps.Marker({
-					position: position,
-					map: map
+			
+
+			if (numberOfMarkers === 0){
+				map.addListener('click', function(e) {
+					placeMarker(e.latLng, map);
 				});
-				map.panTo(position);
-				console.log(marker2);
+
+				function placeMarker(position, map) {
+					// console.log(position.lat);
+					var marker2 = new google.maps.Marker({
+						position: position,
+						map: map
+					});
+					map.panTo(position);
+					// console.log(marker2);
+					markerStartLat = marker2.getPosition().lat();
+					markerStartLong = marker2.getPosition().lng();
+					console.log(markerStartLat);
+					console.log(markerStartLong);
+
+					numberOfMarkers++;
+					console.log(numberOfMarkers);
+					mapUse = true;
+
+				}
+
 			}
-		}
+			else if (numberOfMarkers === 1){
+				map.addListener('click', function(e) {
+					placeMarker(e.latLng, map);
+				});
+
+				function placeMarker(position, map) {
+					// console.log(position.lat);
+					var marker3 = new google.maps.Marker({
+						position: position,
+						map: map
+					});
+					map.panTo(position);
+					// console.log(marker2);
+					markerEndLat = marker3.getPosition().lat();
+					markerEndLong = marker3.getPosition().lng();
+					console.log(markerEndLat);
+					console.log(markerEndLong);
+
+					numberOfMarkers++;
+					console.log(numberOfMarkers);
+					mapUse = true;
+				}
+			}
+			
+
+	}
 	
 
 
@@ -37,15 +79,62 @@
 		
 		event.preventDefault();
 
+		var startLat;
+		var startLong;
+		var endLong;
+		var endLat;
+
+		if(mapUse === true){
+			startLat = markerStartLat;
+			//console.log(startLat);
+			startLong = markerStartLong;
+			endLong = markerEndLong;
+			endLat = markerEndLat;
+
+			$.ajax({
+				url: "https://api.uber.com/v1.2/estimates/price?start_latitude=" + startLat + "&start_longitude=" + startLong + "&end_latitude=" + endLat + "&end_longitude=" + endLong,
+				headers: {
+					Authorization: "Token " + "i_HMTeuGY4Uob6vuVe6vW17G45oWnlIqugMwi6UA" 
+				},
+				
+				success: function(result) {
+					console.log(result);
+					
+
+					var uber = result.prices[1];
+					console.log(uber)
+
+					var uberCostEstimate = result.prices[1].estimate;
+					var uberTimeEstimate = result.prices[1].duration;
+					var uberDistanceEstimate = result.prices[1].distance;
+
+					var timeSeconds = uberTimeEstimate;
+                    var timeMinutes = Math.round(timeSeconds / 60);
+
+					var time = $("<p>").text("The trip will take approximately " + timeMinutes + " minutes.");
+
+                    var price = $("<p>").text("The estimated price will be " + uberCostEstimate);
+
+                    var distance = $("<p>").text("The total distance of the trip is " + uberDistanceEstimate + " miles.");
+
+                    var uberDiv = $("#uber-content");
+
+                    uberDiv.html(time);
+                    uberDiv.append(price);
+                    uberDiv.append(distance);
+				}
+			});
+
+		}
+		
+		console.log(mapUse);
+
 		var startPoint = $("#icon_start").val().trim();
 		console.log(startPoint);
 		var endPoint = $("#icon_end").val().trim();
 		console.log(endPoint);
 
-		var startLat;
-		var startLong;
-		var endLong;
-		var endLat;
+		
 
 
 		$.when(
