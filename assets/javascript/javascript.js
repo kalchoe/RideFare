@@ -96,11 +96,11 @@
 					var timeSeconds = uberTimeEstimate;
                     var timeMinutes = Math.round(timeSeconds / 60);
 
-					var time = $("<p>").text("The trip will take approximately " + timeMinutes + " minutes.");
+					var time = $("<p>").text("Trip Time: " + timeMinutes + " minutes");
 
-                    var price = $("<p>").text("The estimated price will be " + uberCostEstimate);
+                    var price = $("<p>").text("Trip Price: $" + uberCostEstimate);
 
-                    var distance = $("<p>").text("The total distance of the trip is " + uberDistanceEstimate + " miles.");
+                    var distance = $("<p>").text("Trip Distance: " + uberDistanceEstimate + " miles");
 
                     var uberDiv = $("#uber-content");
 
