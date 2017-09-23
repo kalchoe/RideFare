@@ -126,10 +126,104 @@
 
 
 	<!-- JQuery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- Firebase JavaScript Link -->
-    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- Firebase JavaScript Link -->
+	<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
 	<!-- Link to JS file -->
-    <script type="text/javascript" src="assets/javascript/api.js" async></script>
+	<script type="text/javascript" src="assets/javascript/api.js" async></script>
+
+	<script>
+		function initMap() {
+			var myLatLng = {lat: -25.363, lng: 131.044};
+
+			console.log(myLatLng);
+
+			var map = new google.maps.Map(document.getElementById("map"), {
+				zoom: 4,
+				center: myLatLng
+			});
+
+			var marker = new google.maps.Marker({
+				position: myLatLng,
+				map: map,
+				title: 'Hello World!'
+			});
+			map.addListener('click', function(e) {
+				placeMarker(e.latLng, map);
+			});
+
+			function placeMarker(position, map) {
+				var marker = new google.maps.Marker({
+					position: position,
+					map: map
+				});
+				map.panTo(position);
+			}
+		}
+	</script>
+	<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVUpJOQ43zmN_hdo0fHcY8aGZ7WacfBzg&callback=initMap">
+	</script>
+
+<script>
+
+	$("#submit").on("click", function(){
+		
+		event.preventDefault();
+
+		var startPoint = $("#icon_start").val().trim();
+		console.log(startPoint);
+		var endPoint = $("#icon_end").val().trim();
+		console.log(endPoint);
+
+		var startLat;
+		var startLong;
+		var endLong;
+		var endLat;
+
+
+		$.when(
+			$.ajax({
+				url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + startPoint + "&key=AIzaSyCVUpJOQ43zmN_hdo0fHcY8aGZ7WacfBzg",
+				method: 'GET'
+			}).done(function(response){
+				console.log(response);
+				startLat = response.results[0].geometry.location.lat
+				console.log(startLat);
+				startLong = response.results[0].geometry.location.lng 
+				console.log(startLong);
+			}),
+
+		//This is the API call for the destination
+		$.ajax({
+			url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + endPoint + "&key=AIzaSyCVUpJOQ43zmN_hdo0fHcY8aGZ7WacfBzg",
+			method: 'GET'
+		}).done(function(response){
+			console.log(response);
+			endLat = response.results[0].geometry.location.lat
+			console.log(endLat);
+			
+			endLong = response.results[0].geometry.location.lng 
+			console.log(endLong);
+		})
+		).then(function (){
+
+			$.ajax({
+				url: "https://api.uber.com/v1.2/estimates/price?start_latitude=" + startLat + "&start_longitude=" + startLong + "&end_latitude=" + endLat + "&end_longitude=" + endLong,
+				headers: {
+					Authorization: "Token " + "i_HMTeuGY4Uob6vuVe6vW17G45oWnlIqugMwi6UA" 
+				},
+				
+				success: function(result) {
+					console.log(result);
+					
+				}
+			});
+
+		});
+		
+	});
+
+</script>
 </body>
 </html>
