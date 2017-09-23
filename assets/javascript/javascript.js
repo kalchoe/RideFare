@@ -47,6 +47,8 @@
 		var endLong;
 		var endLat;
 
+		// scroll to bottom of page
+		$("html, body").animate({scrollTop: $(document).height()}, "slow");
 
 		$.when(
 			$.ajax({
