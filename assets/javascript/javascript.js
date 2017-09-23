@@ -140,11 +140,11 @@
 
                     console.log("The estimated price will be $" + minPriceDollars + "-" + maxPriceDollars + ".");
 
-                    var time = $("<p>").text("The trip will take approximately " + timeMinutes + " minutes.");
+                    var time = $("<p>").text("Trip Time: " + timeMinutes + " minutes");
 
-                    var price = $("<p>").text("The estimated price will be $" + minPriceDollars + "-" + maxPriceDollars + ".");
+                    var price = $("<p>").text("Trip Price: $" + minPriceDollars + "-" + maxPriceDollars);
 
-                    var distance = $("<p>").text("The total distance of the trip is " + estimatedDistanceMiles + " miles.");
+                    var distance = $("<p>").text("Trip Distance: " + estimatedDistanceMiles + " miles");
 
                     var lyftDiv = $("#lyft-content");
 
