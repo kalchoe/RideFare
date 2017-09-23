@@ -1,3 +1,14 @@
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyDpZ-X_MIUp9q-VPdDsUOhFWkzbddr8wa4",
+			authDomain: "project-1-55ee8.firebaseapp.com",
+			databaseURL: "https://project-1-55ee8.firebaseio.com",
+			projectId: "project-1-55ee8",
+			storageBucket: "",
+			messagingSenderId: "13539339574"
+		};
+		firebase.initializeApp(config);
+
 
 		function initMap() {
 			var myLatLng = {lat: 30.2672, lng: -97.7431};
