@@ -32,7 +32,6 @@
 	
 
 
-
 	$("#submit").on("click", function(){
 		
 		event.preventDefault();
@@ -49,6 +48,7 @@
 
 		// scroll to bottom of page
 		$("html, body").animate({scrollTop: $(document).height()}, "slow");
+		$(".card").show();
 
 		$.when(
 			$.ajax({
