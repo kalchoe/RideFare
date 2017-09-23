@@ -223,7 +223,10 @@
 					var uberTimeEstimate = result.prices[1].duration;
 					var uberDistanceEstimate = result.prices[1].distance;
 
-					var time = $("<p>").text("The trip will take approximately " + uberTimeEstimate + " minutes.");
+					var timeSeconds = uberTimeEstimate;
+                    var timeMinutes = Math.round(timeSeconds / 60);
+
+					var time = $("<p>").text("The trip will take approximately " + timeMinutes + " minutes.");
 
                     var price = $("<p>").text("The estimated price will be " + uberCostEstimate);
 
