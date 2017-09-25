@@ -3,6 +3,9 @@ var markerStartLat;
 var markerStartLong;
 var markerEndLat;
 var markerEndLong;
+var marker1;
+var marker2;
+var numberOfMarkers = 0;
 
 		function initMap() {
 
@@ -16,7 +19,7 @@ var markerEndLong;
 				center: myLatLng
 			});
 
-			var numberOfMarkers = 0;
+			
 
 			
 
@@ -27,14 +30,14 @@ var markerEndLong;
 
 				function placeMarker(position, map) {
 					// console.log(position.lat);
-					var marker2 = new google.maps.Marker({
+					marker1 = new google.maps.Marker({
 						position: position,
 						map: map
 					});
 					map.panTo(position);
 					// console.log(marker2);
-					markerStartLat = marker2.getPosition().lat();
-					markerStartLong = marker2.getPosition().lng();
+					markerStartLat = marker1.getPosition().lat();
+					markerStartLong = marker1.getPosition().lng();
 					console.log(markerStartLat);
 					console.log(markerStartLong);
 
@@ -42,31 +45,44 @@ var markerEndLong;
 					console.log(numberOfMarkers);
 					mapUse = true;
 
+					// break;
+
 				}
 
 			}
 			else if (numberOfMarkers === 1){
+
 				map.addListener('click', function(e) {
 					placeMarker(e.latLng, map);
 				});
 
 				function placeMarker(position, map) {
 					// console.log(position.lat);
-					var marker3 = new google.maps.Marker({
+					marker2 = new google.maps.Marker({
 						position: position,
 						map: map
 					});
 					map.panTo(position);
 					// console.log(marker2);
-					markerEndLat = marker3.getPosition().lat();
-					markerEndLong = marker3.getPosition().lng();
+					markerEndLat = marker2.getPosition().lat();
+					markerEndLong = marker2.getPosition().lng();
+					markerStartLat = marker1.getPosition().lat();
+					markerStartLong = marker1.getPosition().lng();
+					console.log(markerStartLat);
+					console.log(markerStartLong);
 					console.log(markerEndLat);
 					console.log(markerEndLong);
+					
 
 					numberOfMarkers++;
 					console.log(numberOfMarkers);
 					mapUse = true;
+
+					break;
 				}
+			}
+			else if (numberOfMarkers === 2){
+				console.log("No more markers please!");
 			}
 			
 
@@ -84,50 +100,64 @@ var markerEndLong;
 		var endLong;
 		var endLat;
 
+		console.log(mapUse)
+
 		if(mapUse === true){
 			startLat = markerStartLat;
 			//console.log(startLat);
 			startLong = markerStartLong;
 			endLong = markerEndLong;
+			console.log(endLong);
 			endLat = markerEndLat;
 
 			$.ajax({
-				url: "https://api.uber.com/v1.2/estimates/price?start_latitude=" + startLat + "&start_longitude=" + startLong + "&end_latitude=" + endLat + "&end_longitude=" + endLong,
-				headers: {
-					Authorization: "Token " + "i_HMTeuGY4Uob6vuVe6vW17G45oWnlIqugMwi6UA" 
-				},
-				
-				success: function(result) {
-					console.log(result);
-					
+                url: "https://api.lyft.com/v1/cost?start_lat=" + startLat + "&start_lng=" + startLong + "&end_lat=" + endLat + "&end_lng=" + endLong,
+                headers: {
+                    Authorization: "bearer " + "jpUVi1A41gLssi8agPiLKDXoNzGDXQ0LCIhl1ZBZlcz/pkpTEqLMe7abmxiTzIyFo9gVLkJ9JmCc/cDNF87f5tF0my2m7Qfy84lbV/IPOC+4FLIn6HuFMtk=" 
+                },
+                
+                success: function(result) {
 
-					var uber = result.prices[1];
-					console.log(uber)
+                    var lyft = result.cost_estimates[3];
+                    console.log(lyft);
 
-					var uberCostEstimate = result.prices[1].estimate;
-					var uberTimeEstimate = result.prices[1].duration;
-					var uberDistanceEstimate = result.prices[1].distance;
+                    var maxPrice = lyft.estimated_cost_cents_max;
+                    var minPrice = lyft.estimated_cost_cents_min;
+                    
 
-					var timeSeconds = uberTimeEstimate;
+                    var maxPriceDollars = (lyft.estimated_cost_cents_max / 100);
+                    var minPriceDollars = (lyft.estimated_cost_cents_min / 100);
+                    
+
+                    var timeSeconds = lyft.estimated_duration_seconds;
                     var timeMinutes = Math.round(timeSeconds / 60);
 
-					var time = $("<p>").text("The trip will take approximately " + timeMinutes + " minutes.");
+                    var estimatedDistanceMiles = lyft.estimated_distance_miles;
 
-                    var price = $("<p>").text("The estimated price will be " + uberCostEstimate);
+                    console.log("The trip will take approximately " + timeMinutes + " minutes.");
 
-                    var distance = $("<p>").text("The total distance of the trip is " + uberDistanceEstimate + " miles.");
+                    console.log("The total distance of the trip is " + estimatedDistanceMiles + " miles.")
 
-                    var uberDiv = $("#uber-content");
+                    console.log("The estimated price will be $" + minPriceDollars + "-" + maxPriceDollars + ".");
 
-                    uberDiv.html(time);
-                    uberDiv.append(price);
-                    uberDiv.append(distance);
-				}
-			});
+                    var time = $("<p>").text("The trip will take approximately " + timeMinutes + " minutes.");
+
+                    var price = $("<p>").text("The estimated price will be $" + minPriceDollars + "-" + maxPriceDollars + ".");
+
+                    var distance = $("<p>").text("The total distance of the trip is " + estimatedDistanceMiles + " miles.");
+
+                    var lyftDiv = $("#lyft-content");
+
+                    lyftDiv.html(time);
+                    lyftDiv.append(price);
+                    lyftDiv.append(distance);
+
+
+                }
+            });
 
 		}
 		
-		console.log(mapUse);
 
 		var startPoint = $("#icon_start").val().trim();
 		console.log(startPoint);
