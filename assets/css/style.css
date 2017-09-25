@@ -30,3 +30,16 @@
 #map {
     height: 300px;
 }
+
+.card {
+    height: 200px;
+}
+
+.card-content {
+    font-size: small;
+}
+
+#uber-image, #lyft-image {
+    height: 200px;
+    width: 200px;
+}
