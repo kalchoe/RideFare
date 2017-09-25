@@ -5,7 +5,7 @@
 		var startLong;
 		var endLong;
 		var endLat;
-
+		var marker;
 
 		// Initialize Firebase
 		var config = {
@@ -42,7 +42,7 @@
 			});
 
 			function placeMarker(position, map) {
-				var marker = new google.maps.Marker({
+					marker = new google.maps.Marker({
 					position: position,
 					map: map
 				});
@@ -165,7 +165,7 @@
 		}
 		else {
 		
-		setMapOnAll(null);
+		marker.setMapOnAll(null);
 		var startPoint = $("#icon_start").val().trim();
 		console.log(startPoint);
 		var endPoint = $("#icon_end").val().trim();
