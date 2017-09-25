@@ -164,7 +164,8 @@
 
 		}
 		else {
-
+		
+		marker.setMap(null);
 		var startPoint = $("#icon_start").val().trim();
 		console.log(startPoint);
 		var endPoint = $("#icon_end").val().trim();
