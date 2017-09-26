@@ -54,4 +54,5 @@ $.fn.parallax = function () {
   $(document).ready(function(){
       $('.parallax').parallax();
       $(".card").hide();
+      $("#scroll-top").hide();
     });

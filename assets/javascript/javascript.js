@@ -83,6 +83,7 @@
 		if (mapUse === true){
 			$("html, body").animate({scrollTop: $(document).height()}, "slow");
 			$(".card").show();
+			$("#scroll-top").show();
 			startLat = markerArray[0];
 			startLong = markerArray[1];
 			endLat = markerArray[2];
@@ -191,6 +192,7 @@
 		// scroll to bottom of page
 		$("html, body").animate({scrollTop: $(document).height()}, "slow");
 		$(".card").show();
+		$("#scroll-top").show();
 
 		$.when(
 			$.ajax({
