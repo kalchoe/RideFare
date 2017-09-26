@@ -275,8 +275,13 @@
 
                     var maxPriceDollars = (lyft.estimated_cost_cents_max / 100);
                     var minPriceDollars = (lyft.estimated_cost_cents_min / 100);
-                    
 
+                    var roundMaxPrice = Math.round(maxPriceDollars);
+                    var roundMinPrice = Math.round(minPriceDollars);
+
+                    console.log("Rounded Max Price: " +  roundMaxPrice);
+                    console.log("Rounded Min Price: " + roundMinPrice);
+                    
                     var timeSeconds = lyft.estimated_duration_seconds;
                     var timeMinutes = Math.round(timeSeconds / 60);
 
@@ -292,12 +297,18 @@
 
                     var price = $("<p>").text("Trip Price: $" + minPriceDollars + "-" + maxPriceDollars);
 
+                    var priceEqual = $("<p>").text("Trip Price: $" + roundMinPrice);
+
                     var distance = $("<p>").text("Trip Distance: " + estimatedDistanceMiles + " miles");
 
                     var lyftDiv = $("#lyft-content");
 
                     lyftDiv.html(time);
-                    lyftDiv.append(price);
+                    if (roundMinPrice === roundMaxPrice) {
+                    	lyftDiv.append(priceEqual);
+                    } else {
+                    	lyftDiv.append(price);
+                    }
                     lyftDiv.append(distance);
 
                     var surge = parseInt(lyft.primetime_percentage);
