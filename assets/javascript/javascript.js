@@ -5,6 +5,7 @@
 		var startLong;
 		var endLong;
 		var endLat;
+		var markers = [];
 
 		// Initialize Firebase
 		var config = {
@@ -17,6 +18,12 @@
 		};
 		firebase.initializeApp(config);
 
+		function clearOverlays() {
+			for (var i = 0; i < markers.length; i++ ) {
+				markers[i].setMap(null);
+			}
+			markers.length = 0;
+		};
 
 		function initMap() {
 			var myLatLng = {lat: 30.2672, lng: -97.7431};
@@ -45,7 +52,12 @@
 					position: position,
 					map: map
 				});
+
 				map.panTo(position);
+
+				markers.push(marker);
+				console.log(markers);
+
 				var markerStartLat = marker.getPosition().lat();
 				var markerStartLong = marker.getPosition().lng();
 				markerArray.push(markerStartLat);
@@ -63,9 +75,10 @@
 	
 
 
-	$("#submit").on("click", function(){
-		
-		event.preventDefault();
+		$("#submit").on("click", function(){
+
+			event.preventDefault();
+
 
 		if (mapUse === true){
 			$("html, body").animate({scrollTop: $(document).height()}, "slow");
@@ -75,6 +88,7 @@
 			endLat = markerArray[2];
 			endLong = markerArray[3];
 			mapUse = false;
+
 
 			$.ajax({
 				url: "https://api.uber.com/v1.2/estimates/price?start_latitude=" + startLat + "&start_longitude=" + startLong + "&end_latitude=" + endLat + "&end_longitude=" + endLong,
@@ -164,7 +178,9 @@
 
 		}
 		else {
-		
+
+		clearOverlays();
+
 		var startPoint = $("#icon_start").val().trim();
 		console.log(startPoint);
 		var endPoint = $("#icon_end").val().trim();
