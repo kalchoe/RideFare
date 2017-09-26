@@ -7,7 +7,6 @@
 		var endLat;
 		var markers = [];
 
-
 		// Initialize Firebase
 		var config = {
 			apiKey: "AIzaSyDpZ-X_MIUp9q-VPdDsUOhFWkzbddr8wa4",
@@ -49,7 +48,7 @@
 			});
 
 			function placeMarker(position, map) {
-				var marker = new google.maps.Marker({
+					var marker = new google.maps.Marker({
 					position: position,
 					map: map
 				});
@@ -80,16 +79,16 @@
 
 			event.preventDefault();
 
-			if (mapUse === true){
 
-				$("html, body").animate({scrollTop: $(document).height()}, "slow");
-				$(".card").show();
+		if (mapUse === true){
+			$("html, body").animate({scrollTop: $(document).height()}, "slow");
+			$(".card").show();
+			startLat = markerArray[0];
+			startLong = markerArray[1];
+			endLat = markerArray[2];
+			endLong = markerArray[3];
+			mapUse = false;
 
-				startLat = markerArray[0];
-				startLong = markerArray[1];
-				endLat = markerArray[2];
-				endLong = markerArray[3];
-				mapUse = false;
 
 			$.ajax({
 				url: "https://api.uber.com/v1.2/estimates/price?start_latitude=" + startLat + "&start_longitude=" + startLong + "&end_latitude=" + endLat + "&end_longitude=" + endLong,

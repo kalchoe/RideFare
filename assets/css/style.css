@@ -22,7 +22,7 @@
 	color: #ee6e73;
 }
 
-#submit {
+#submit, #clear, #scroll-top {
     background-color: #ee6e73;
     margin-top: 40px;
 }
