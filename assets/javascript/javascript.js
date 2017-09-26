@@ -1,3 +1,4 @@
+
 		var markerArray = [];
 		var mapUse = false;
 		var startLat;
@@ -5,6 +6,7 @@
 		var endLong;
 		var endLat;
 		var markers = [];
+
 
 		// Initialize Firebase
 		var config = {
@@ -239,7 +241,9 @@
 
 					var time = $("<p>").text("Trip Time: " + timeMinutes + " minutes");
 
+
                     var price = $("<p>").text("Trip Price: " + uberCostEstimate);
+
 
                     var distance = $("<p>").text("Trip Distance: " + uberDistanceEstimate + " miles");
 

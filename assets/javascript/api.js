@@ -53,4 +53,5 @@ $.fn.parallax = function () {
 // get parallax feature ready when page loads
   $(document).ready(function(){
       $('.parallax').parallax();
+      $(".card").hide();
     });
