@@ -62,17 +62,20 @@
 	
 
 
-	$("#submit").on("click", function(){
-		
-		event.preventDefault();
+		$("#submit").on("click", function(){
+			
+			event.preventDefault();
 
-		if (mapUse === true){
+			if (mapUse === true){
 
-			startLat = markerArray[0];
-			startLong = markerArray[1];
-			endLat = markerArray[2];
-			endLong = markerArray[3];
-			mapUse = false;
+				$("html, body").animate({scrollTop: $(document).height()}, "slow");
+				$(".card").show();
+
+				startLat = markerArray[0];
+				startLong = markerArray[1];
+				endLat = markerArray[2];
+				endLong = markerArray[3];
+				mapUse = false;
 
 			$.ajax({
 				url: "https://api.uber.com/v1.2/estimates/price?start_latitude=" + startLat + "&start_longitude=" + startLong + "&end_latitude=" + endLat + "&end_longitude=" + endLong,
@@ -162,6 +165,8 @@
 
 		}
 		else {
+
+
 
 		var startPoint = $("#icon_start").val().trim();
 		console.log(startPoint);
