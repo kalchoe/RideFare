@@ -68,7 +68,8 @@
 		event.preventDefault();
 
 		if (mapUse === true){
-
+			$("html, body").animate({scrollTop: $(document).height()}, "slow");
+			$(".card").show();
 			startLat = markerArray[0];
 			startLong = markerArray[1];
 			endLat = markerArray[2];
