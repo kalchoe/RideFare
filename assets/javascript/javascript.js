@@ -322,4 +322,9 @@
 	}	
 	});
 
+	$("#scroll-top").on("click", function(){
+		// scroll to top of page
+		$("html, body").animate({scrollTop: 0}, "slow");
+	});
+
 
